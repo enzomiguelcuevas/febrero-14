@@ -73,7 +73,7 @@ export default function PhotoGallery({ isVisible, onBack }: PhotoGalleryProps) {
             // Simular carga de fotos (en producción esto buscaría archivos reales)
             const categoryPhotos: Photo[] = Array.from({ length: 4 }, (_, i) => ({
               id: `${category}-${i + 1}`,
-              src: `/assets/photos/${category}/${category}-${i + 1}.jpg`,
+              src: `/${category}/${category}-${i + 1}.jpg`,
               alt: `Foto ${i + 1} de ${category}`,
               category,
               loaded: false
