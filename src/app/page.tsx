@@ -9,7 +9,7 @@ import FloatingHearts from '@/components/FloatingHearts'
 import CountDownTimer from '@/components/CountDownTimer'
 import ConfettiExplosion from '@/components/ConfettiExplosion'
 import MapComponent from '@/components/MapComponent'
-import YouTubeMusicPlayer from '@/components/YouTubeMusicPlayer'
+import MusicPlayer from '@/components/MusicPlayer'
 import FlowersAnimation from '@/components/FlowersAnimation'
 import PhotoGallery from '@/components/PhotoGallery'
 
@@ -20,6 +20,7 @@ export default function Home() {
   const [showConfetti, setShowConfetti] = useState(false)
   const [showFlowers, setShowFlowers] = useState(false)
   const [showPhotoGallery, setShowPhotoGallery] = useState(false)
+  const [musicTriggered, setMusicTriggered] = useState(false)
 
   const invitationData = {
     name: "Dan Jhosss",
@@ -40,6 +41,7 @@ Desde que apareciste, ${' Jhosss'}, todo tiene un brillo distinto.`,
 
   const handleEnvelopeOpen = () => {
     setIsEnvelopeOpen(true)
+    setMusicTriggered(true)
     setTimeout(() => setShowAcceptButton(true), 4000)
   }
 
@@ -57,7 +59,7 @@ Desde que apareciste, ${' Jhosss'}, todo tiene un brillo distinto.`,
       <FloatingHearts />
       
       {/* Music Player */}
-      <YouTubeMusicPlayer />
+      <MusicPlayer onPlayTrigger={() => setMusicTriggered(true)} />
       
       {/* Main Content */}
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen p-8">
@@ -110,9 +112,6 @@ Desde que apareciste, ${' Jhosss'}, todo tiene un brillo distinto.`,
             </motion.div>
           )}
         </AnimatePresence>
-
-        {/* Confetti Explosion */}
-        <ConfettiExplosion trigger={showConfetti} />
 
         {/* Confetti Explosion */}
         <ConfettiExplosion trigger={showConfetti} />
