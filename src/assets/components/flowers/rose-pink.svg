@@ -1,0 +1,37 @@
+<svg width="35" height="35" viewBox="0 0 35 35" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <radialGradient id="roseGradient" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#FFB6C1;stop-opacity:1" />
+      <stop offset="70%" style="stop-color:#FF69B4;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#FF1493;stop-opacity:1" />
+    </radialGradient>
+    <radialGradient id="roseCenter" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" style="stop-color:#DC143C;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#8B0000;stop-opacity:1" />
+    </radialGradient>
+  </defs>
+  
+  <!-- Pétalos de rosa - capas múltiples -->
+  <circle cx="17.5" cy="10" r="8" fill="url(#roseGradient)" opacity="0.7"/>
+  <circle cx="10" cy="15" r="7" fill="url(#roseGradient)" opacity="0.8"/>
+  <circle cx="25" cy="15" r="7" fill="url(#roseGradient)" opacity="0.8"/>
+  <circle cx="17.5" cy="22" r="8" fill="url(#roseGradient)" opacity="0.7"/>
+  <circle cx="14" cy="10" r="6" fill="url(#roseGradient)" opacity="0.9"/>
+  <circle cx="21" cy="10" r="6" fill="url(#roseGradient)" opacity="0.9"/>
+  <circle cx="14" cy="20" r="6" fill="url(#roseGradient)" opacity="0.9"/>
+  <circle cx="21" cy="20" r="6" fill="url(#roseGradient)" opacity="0.9"/>
+  
+  <!-- Centro de la rosa -->
+  <circle cx="17.5" cy="15" r="5" fill="url(#roseCenter)" />
+  
+  <!-- Detalles del centro -->
+  <circle cx="16" cy="14" r="0.5" fill="#8B0000" opacity="0.8"/>
+  <circle cx="19" cy="14" r="0.5" fill="#8B0000" opacity="0.8"/>
+  <circle cx="17.5" cy="16.5" r="0.5" fill="#8B0000" opacity="0.8"/>
+  <circle cx="16.5" cy="15.5" r="0.5" fill="#8B0000" opacity="0.6"/>
+  <circle cx="18.5" cy="15.5" r="0.5" fill="#8B0000" opacity="0.6"/>
+  
+  <!-- Tallo -->
+  <rect x="16.5" y="24" width="2" height="11" fill="#228B22" opacity="0.8"/>
+  <ellipse cx="17.5" cy="30" rx="3" ry="1.5" fill="#228B22" opacity="0.6"/>
+</svg>
