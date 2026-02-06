@@ -59,7 +59,7 @@ Desde que apareciste, ${' Jhosss'}, todo tiene un brillo distinto.`,
       <FloatingHearts />
       
       {/* Music Player */}
-      <MusicPlayer onPlayTrigger={() => setMusicTriggered(true)} />
+      <MusicPlayer trigger={musicTriggered} />
       
       {/* Main Content */}
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen p-8">

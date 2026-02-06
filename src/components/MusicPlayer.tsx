@@ -5,19 +5,21 @@ import { motion } from 'framer-motion'
 import { Play, Pause, Volume2, Heart, Music, Disc } from 'lucide-react'
 
 interface MusicPlayerProps {
-  onPlayTrigger?: () => void
+  trigger?: boolean
 }
 
-export default function MusicPlayer({ onPlayTrigger }: MusicPlayerProps) {
+export default function MusicPlayer({ trigger }: MusicPlayerProps) {
   const [isPlaying, setIsPlaying] = useState(false)
   const [isLoading, setIsLoading] = useState(true)
   const [volume, setVolume] = useState(0.3)
   const [error, setError] = useState(false)
   const audioRef = useRef<HTMLAudioElement | null>(null)
+  const hasTriggeredRef = useRef(false)
 
   // Función para reproducir música
   const playMusic = useCallback(() => {
-    if (audioRef.current && !isPlaying && !error) {
+    if (audioRef.current && !hasTriggeredRef.current && !error) {
+      hasTriggeredRef.current = true
       audioRef.current.play()
         .then(() => {
           setIsPlaying(true)
@@ -28,28 +30,34 @@ export default function MusicPlayer({ onPlayTrigger }: MusicPlayerProps) {
           setIsLoading(false)
         })
     }
-  }, [isPlaying, error])
+  }, [error])
 
-  // Llamar onPlayTrigger cuando se proporcione y reproducir
+  // Efecto para reproducir cuando trigger cambia a true
   useEffect(() => {
-    if (onPlayTrigger) {
-      onPlayTrigger()
+    if (trigger && !hasTriggeredRef.current) {
       playMusic()
     }
-  }, [onPlayTrigger, playMusic])
+  }, [trigger, playMusic])
 
   useEffect(() => {
     audioRef.current = new Audio('/music/song1.mp3')
-    audioRef.current.volume = volume
-    audioRef.current.loop = true
+    if (audioRef.current) {
+      audioRef.current.volume = volume
+      audioRef.current.loop = true
 
-    audioRef.current.oncanplaythrough = () => {
-      setIsLoading(false)
-    }
+      audioRef.current.oncanplaythrough = () => {
+        setIsLoading(false)
+      }
 
-    audioRef.current.onerror = () => {
-      setError(true)
-      setIsLoading(false)
+      audioRef.current.onerror = () => {
+        setError(true)
+        setIsLoading(false)
+      }
+
+      // Eventos para sincronizar estado con el audio
+      audioRef.current.onplay = () => setIsPlaying(true)
+      audioRef.current.onpause = () => setIsPlaying(false)
+      audioRef.current.onended = () => setIsPlaying(false)
     }
 
     return () => {
@@ -76,7 +84,6 @@ export default function MusicPlayer({ onPlayTrigger }: MusicPlayerProps) {
         console.log('Error reproduciendo:', err)
       })
     }
-    setIsPlaying(!isPlaying)
   }
 
   const handleVolumeChange = (e: React.ChangeEvent<HTMLInputElement>) => {
