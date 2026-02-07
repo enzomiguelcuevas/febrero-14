@@ -25,7 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es">
+    <html lang="es-PE">
       <body
         className={`${outfit.variable} ${dancingScript.variable} font-sans antialiased bg-valentine-cream text-valentine-dark min-h-screen relative pb-32 md:pb-40`}
       >
