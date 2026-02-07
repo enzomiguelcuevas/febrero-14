@@ -1,7 +1,7 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import { motion, AnimatePresence } from "framer-motion";
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import Envelope from "@/components/Envelope";
 import TypewriterText from "@/components/TypewriterText";
 import AcceptButton from "@/components/AcceptButton";
@@ -9,141 +9,105 @@ import FloatingHearts from "@/components/FloatingHearts";
 import CountDownTimer from "@/components/CountDownTimer";
 import ConfettiExplosion from "@/components/ConfettiExplosion";
 import MapComponent from "@/components/MapComponent";
-import MusicPlayer from "@/components/MusicPlayer";
 import FlowersAnimation from "@/components/FlowersAnimation";
-import PhotoGallery from "@/components/PhotoGallery";
+import { useMusic } from "@/components/MusicProvider";
 
 export default function Home() {
+  const router = useRouter();
+  const { trigger: triggerMusic } = useMusic();
   const [isEnvelopeOpen, setIsEnvelopeOpen] = useState(false);
   const [showAcceptButton, setShowAcceptButton] = useState(false);
   const [accepted, setAccepted] = useState(false);
   const [showConfetti, setShowConfetti] = useState(false);
   const [showFlowers, setShowFlowers] = useState(false);
-  const [showPhotoGallery, setShowPhotoGallery] = useState(false);
-  const [musicTriggered, setMusicTriggered] = useState(false);
 
   const invitationData = {
     name: "Dan Jhosss",
-    message: `Sin darme cuenta, empezaste a ocupar un lugar
-    bonito en mis pensamientos. En lo simple, en lo cotidiano,
-     en esos momentos que no se planean.Jhosss
-      hay algo en ti que hace que compartir tiempo se sienta natural y especial.
-
-Desde que apareciste, ${" Jhosss"}, todo tiene un brillo distinto.`,
-
-    invitation: `Mi Amor,
-¿Te gustaría compartir conmigo un 14 de febrero especial?
- Me haría mucha ilusión.`,
-
+    message: `Sin darme cuenta, empezaste a ocupar un lugar bonito en mis pensamientos. En lo simple, en lo cotidiano, en esos momentos que no se planean.\n\nJhosss, hay algo en ti que hace que compartir tiempo se sienta natural y especial. Desde que apareciste, todo tiene un brillo distinto.`,
+    invitation: `Mi Amor, ¿te gustaría compartir conmigo un 14 de febrero especial? Me haría mucha ilusión.`,
     location: "Urípa, Chincheros, Apurímac, Perú",
     date: "2026-02-14T19:00:00",
   };
 
   const handleEnvelopeOpen = () => {
     setIsEnvelopeOpen(true);
-    setMusicTriggered(true);
-    setTimeout(() => setShowAcceptButton(true), 4000);
+    triggerMusic();
+    setTimeout(() => setShowAcceptButton(true), 3000);
   };
 
   const handleAccept = () => {
     setAccepted(true);
     setShowConfetti(true);
     setShowFlowers(true);
-    // Mostrar galería después de 7 segundos (confeti + flores)
-    setTimeout(() => setShowPhotoGallery(true), 7000);
+    // Redirigir a galería después de un momento para ver los efectos
+    setTimeout(() => router.push("/gallery"), 8000);
   };
 
   return (
-    <div className="bg-linear-to-br from-pink-100 via-purple-50 to-amber-50 overflow-hidden relative mt-10">
-      {/* Floating background hearts */}
+    <div className="min-h-screen relative overflow-hidden font-sans">
+      {/* Background decoration */}
+      <div className="fixed inset-0 pointer-events-none">
+        <div className="absolute top-0 left-0 w-64 h-64 bg-valentine-pink/20 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2" />
+        <div className="absolute bottom-0 right-0 w-96 h-96 bg-valentine-red/10 rounded-full blur-3xl translate-x-1/3 translate-y-1/3" />
+      </div>
+
+      {/* Floating hearts animation component */}
       <FloatingHearts />
 
-      {/* Music Player */}
-      <MusicPlayer trigger={musicTriggered} />
-
-      {/* Main Content */}
-      <div className="relative z-10 flex flex-col items-center justify-center min-h-screen p-8">
-        <AnimatePresence mode="wait">
-          {!isEnvelopeOpen ? (
-            <motion.div
-              key="envelope"
-              initial={{ opacity: 0, scale: 0.8 }}
-              animate={{ opacity: 1, scale: 1 }}
-              exit={{ opacity: 0, scale: 0.8 }}
-              transition={{ duration: 0.5 }}
-            >
-              <Envelope onOpen={handleEnvelopeOpen} />
-            </motion.div>
-          ) : (
-            <motion.div
-              key="message"
-              initial={{ opacity: 0, y: 50 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.8, delay: 0.2 }}
-              className="max-w-2xl mx-auto text-center space-y-8"
-            >
-              {/* Romantic Message with Typewriter Effect */}
-              <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl">
-                <TypewriterText
-                  text={invitationData.message}
-                  className="text-lg md:text-xl text-gray-800 leading-relaxed font-light italic"
-                />
+      {/* Main Content Area */}
+      <main className="relative z-10 flex flex-col items-center justify-center min-h-screen px-4 py-12 md:px-8">
+        {!isEnvelopeOpen ? (
+          <div className="animate-fade-in-up">
+            <Envelope onOpen={handleEnvelopeOpen} />
+          </div>
+        ) : (
+          <div className="w-full max-w-2xl flex flex-col items-center space-y-8 animate-fade-in-up">
+            {/* Romantic Letter Section */}
+            <div className="w-full glass rounded-3xl p-6 md:p-10 shadow-2xl relative">
+              <div className="absolute -top-6 -left-4 w-12 h-12 bg-valentine-red rounded-full flex items-center justify-center shadow-lg animate-bounce">
+                <span className="text-white text-2xl">💖</span>
               </div>
 
-              {/* Invitation Message */}
-              {showAcceptButton && (
-                <motion.div
-                  initial={{ opacity: 0, y: 30 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.6 }}
-                  className="bg-gradient-to-r from-pink-50 to-purple-50 rounded-2xl p-6 shadow-lg"
-                >
-                  <p className="text-xl text-gray-700 mb-4">
-                    {invitationData.invitation}
-                  </p>
+              <TypewriterText
+                text={invitationData.message}
+                className="text-xl md:text-2xl text-valentine-dark leading-relaxed font-romantic text-center"
+              />
+            </div>
 
-                  {/* Accept Buttons */}
-                  <AcceptButton onAccept={handleAccept} />
-                </motion.div>
-              )}
+            {/* Invitation Reveal */}
+            {showAcceptButton && (
+              <div className="w-full animate-fade-in-up space-y-8 text-center bg-white/40 backdrop-blur-md rounded-3xl p-8 border border-valentine-pink/30 shadow-xl">
+                <p className="text-2xl md:text-3xl text-valentine-dark font-romantic font-bold">
+                  {invitationData.invitation}
+                </p>
 
-              {/* Countdown Timer */}
-              <CountDownTimer targetDate={invitationData.date} />
-            </motion.div>
-          )}
-        </AnimatePresence>
+                <AcceptButton onAccept={handleAccept} />
 
-        {/* Confetti Explosion */}
+                {/* Countdown display */}
+                <div className="pt-4">
+                  <CountDownTimer targetDate={invitationData.date} />
+                </div>
+              </div>
+            )}
+          </div>
+        )}
+
+        {/* Confetti and Flowers */}
         <ConfettiExplosion trigger={showConfetti} />
-
-        {/* Flowers Animation */}
         <FlowersAnimation trigger={showFlowers} />
 
-        {/* Photo Gallery (shown after animations) */}
-        {showPhotoGallery && (
-          <PhotoGallery
-            isVisible={showPhotoGallery}
-            onBack={() => {
-              setShowPhotoGallery(false);
-              setShowFlowers(false);
-              setShowConfetti(false);
-              setAccepted(false);
-            }}
-          />
-        )}
-
-        {/* Location Details (shown after acceptance but before gallery) */}
-        {accepted && !showPhotoGallery && (
-          <motion.div
-            initial={{ opacity: 0, y: 50 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: 0.5 }}
-            className="mt-12 max-w-2xl mx-auto w-full"
-          >
-            <MapComponent location={invitationData.location} />
-          </motion.div>
-        )}
-      </div>
+        {/* Post-Acceptance Content (Map) */}
+        {/* {accepted && (
+          <div className="mt-12 w-full max-w-2xl animate-fade-in-up">
+            <div className="glass rounded-3xl overflow-hidden shadow-2xl border-4 border-white/50">
+              <MapComponent location={invitationData.location} />
+            </div>
+            <p className="text-center mt-4 text-valentine-dark font-medium italic">
+              ¡Te espero en este lugar especial! ✨
+            </p>
+          </div>
+        )} */}
+      </main>
     </div>
   );
 }

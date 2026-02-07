@@ -1,108 +1,118 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import dynamic from 'next/dynamic'
-import { motion } from 'framer-motion'
-import { MapPin, Heart } from 'lucide-react'
+import { useState, useEffect } from "react";
+import dynamic from "next/dynamic";
+import { MapPin, Heart, ExternalLink } from "lucide-react";
 
-const MapContainer = dynamic(() => import('react-leaflet').then(mod => mod.MapContainer), { ssr: false })
-const TileLayer = dynamic(() => import('react-leaflet').then(mod => mod.TileLayer), { ssr: false })
-const Marker = dynamic(() => import('react-leaflet').then(mod => mod.Marker), { ssr: false })
-const Popup = dynamic(() => import('react-leaflet').then(mod => mod.Popup), { ssr: false })
+const MapContainer = dynamic(
+  () => import("react-leaflet").then((mod) => mod.MapContainer),
+  { ssr: false },
+);
+const TileLayer = dynamic(
+  () => import("react-leaflet").then((mod) => mod.TileLayer),
+  { ssr: false },
+);
+const Marker = dynamic(
+  () => import("react-leaflet").then((mod) => mod.Marker),
+  { ssr: false },
+);
+const Popup = dynamic(() => import("react-leaflet").then((mod) => mod.Popup), {
+  ssr: false,
+});
 
 interface MapComponentProps {
-  location: string
+  location: string;
 }
 
 export default function MapComponent({ location }: MapComponentProps) {
-  const [L, setL] = useState<any>(null)
-  const [mounted, setMounted] = useState(false)
+  const [L, setL] = useState<any>(null);
+  const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
-    setMounted(true)
-    import('leaflet').then((leaflet) => {
-      setL(leaflet)
-      
-      delete (leaflet.Icon.Default.prototype as any)._getIconUrl
-      leaflet.Icon.Default.mergeOptions({
-        iconRetinaUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png',
-        iconUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png',
-        shadowUrl: 'https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png',
-      })
-    })
-  }, [])
+    setMounted(true);
+    if (typeof window !== "undefined") {
+      import("leaflet").then((leaflet) => {
+        setL(leaflet);
+        delete (leaflet.Icon.Default.prototype as any)._getIconUrl;
+        leaflet.Icon.Default.mergeOptions({
+          iconRetinaUrl:
+            "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon-2x.png",
+          iconUrl:
+            "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-icon.png",
+          shadowUrl:
+            "https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.7.1/images/marker-shadow.png",
+        });
+      });
+    }
+  }, []);
 
-  const position: [number, number] = [-13.7125, -73.8841]
+  const position: [number, number] = [-13.7125, -73.8841];
 
   if (!mounted || !L) {
     return (
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        className="w-full h-64 bg-gradient-to-br from-pink-100 to-purple-100 rounded-2xl flex items-center justify-center"
-      >
+      <div className="w-full h-64 bg-valentine-pink/10 rounded-3xl flex items-center justify-center animate-pulse">
         <div className="text-center">
-          <MapPin className="w-8 h-8 text-pink-500 mx-auto mb-2" />
-          <p className="text-gray-600">Cargando mapa...</p>
+          <MapPin className="w-8 h-8 text-valentine-pink mx-auto mb-2" />
+          <p className="text-valentine-dark/60 font-medium">
+            Cargando mapa con amor...
+          </p>
         </div>
-      </motion.div>
-    )
+      </div>
+    );
   }
 
   return (
-    <motion.div
-      initial={{ opacity: 0, scale: 0.9 }}
-      animate={{ opacity: 1, scale: 1 }}
-      transition={{ duration: 0.5 }}
-      className="bg-white/80 backdrop-blur-sm rounded-2xl p-6 shadow-xl"
-    >
-      <div className="mb-4 text-center">
-        <h3 className="text-xl font-bold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-purple-500 mb-2">
-          Ubicación Especial
-        </h3>
-        <div className="flex items-center justify-center gap-2 text-gray-600 mb-2">
-          <MapPin className="w-4 h-4" />
-          <p className="text-sm">{location}</p>
+    <div className="bg-white/40 backdrop-blur-md rounded-[2.5rem] p-6 md:p-8 shadow-2xl border border-white/50 animate-fade-in-up">
+      <div className="mb-6 flex flex-col items-center">
+        <div className="w-12 h-12 bg-valentine-red/10 rounded-2xl flex items-center justify-center mb-4">
+          <MapPin className="w-6 h-6 text-valentine-red" />
         </div>
-        <Heart className="w-4 h-4 text-pink-400 mx-auto" fill="currentColor" />
+        <h3 className="text-2xl font-bold text-valentine-dark mb-1 font-romantic">
+          Nuestro Lugar de Encuentro
+        </h3>
+        <p className="text-sm text-valentine-dark/60 font-medium flex items-center gap-2">
+          {location}
+        </p>
       </div>
 
-      <div className="rounded-xl overflow-hidden shadow-inner">
+      <div className="rounded-3xl overflow-hidden shadow-2xl border-4 border-white h-72 relative group">
         <MapContainer
           center={position}
           zoom={15}
-          style={{ height: '300px', width: '100%' }}
+          style={{ height: "100%", width: "100%" }}
           className="z-10"
         >
           <TileLayer
-            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+            attribution='&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
           />
           <Marker position={position}>
             <Popup>
-              <div className="text-center">
-                <Heart className="w-4 h-4 text-pink-500 mx-auto mb-1" fill="currentColor" />
-                <p className="font-semibold text-sm">Nuestro lugar especial</p>
-                <p className="text-xs text-gray-600">{location}</p>
+              <div className="text-center p-1">
+                <Heart className="w-5 h-5 text-valentine-red mx-auto mb-2 fill-current" />
+                <p className="font-bold text-valentine-dark">
+                  ¡Te espero aquí!
+                </p>
+                <p className="text-xs text-valentine-dark/70 mt-1">
+                  Hagamos este momento eterno ✨
+                </p>
               </div>
             </Popup>
           </Marker>
         </MapContainer>
       </div>
 
-      <div className="mt-4 text-center">
-        <motion.a
+      <div className="mt-8 text-center">
+        <a
           href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(location)}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 px-4 py-2 bg-gradient-to-r from-pink-500 to-purple-500 text-white text-sm font-medium rounded-full shadow hover:shadow-lg transition-shadow"
-          whileHover={{ scale: 1.05 }}
-          whileTap={{ scale: 0.95 }}
+          className="inline-flex items-center gap-3 px-8 py-3 bg-valentine-red text-white text-sm font-bold rounded-full shadow-lg hover:shadow-2xl hover:scale-105 active:scale-95 transition-all group"
         >
-          <MapPin className="w-4 h-4" />
-          Abrir en Google Maps
-        </motion.a>
+          <ExternalLink className="w-4 h-4 group-hover:rotate-12 transition-transform" />
+          <span>Ver Ruta en Google Maps</span>
+        </a>
       </div>
-    </motion.div>
-  )
+    </div>
+  );
 }
