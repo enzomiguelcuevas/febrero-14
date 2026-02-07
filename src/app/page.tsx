@@ -1,26 +1,26 @@
-'use client'
+"use client";
 
-import { useState, useEffect } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
-import Envelope from '@/components/Envelope'
-import TypewriterText from '@/components/TypewriterText'
-import AcceptButton from '@/components/AcceptButton'
-import FloatingHearts from '@/components/FloatingHearts'
-import CountDownTimer from '@/components/CountDownTimer'
-import ConfettiExplosion from '@/components/ConfettiExplosion'
-import MapComponent from '@/components/MapComponent'
-import MusicPlayer from '@/components/MusicPlayer'
-import FlowersAnimation from '@/components/FlowersAnimation'
-import PhotoGallery from '@/components/PhotoGallery'
+import { useState, useEffect } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import Envelope from "@/components/Envelope";
+import TypewriterText from "@/components/TypewriterText";
+import AcceptButton from "@/components/AcceptButton";
+import FloatingHearts from "@/components/FloatingHearts";
+import CountDownTimer from "@/components/CountDownTimer";
+import ConfettiExplosion from "@/components/ConfettiExplosion";
+import MapComponent from "@/components/MapComponent";
+import MusicPlayer from "@/components/MusicPlayer";
+import FlowersAnimation from "@/components/FlowersAnimation";
+import PhotoGallery from "@/components/PhotoGallery";
 
 export default function Home() {
-  const [isEnvelopeOpen, setIsEnvelopeOpen] = useState(false)
-  const [showAcceptButton, setShowAcceptButton] = useState(false)
-  const [accepted, setAccepted] = useState(false)
-  const [showConfetti, setShowConfetti] = useState(false)
-  const [showFlowers, setShowFlowers] = useState(false)
-  const [showPhotoGallery, setShowPhotoGallery] = useState(false)
-  const [musicTriggered, setMusicTriggered] = useState(false)
+  const [isEnvelopeOpen, setIsEnvelopeOpen] = useState(false);
+  const [showAcceptButton, setShowAcceptButton] = useState(false);
+  const [accepted, setAccepted] = useState(false);
+  const [showConfetti, setShowConfetti] = useState(false);
+  const [showFlowers, setShowFlowers] = useState(false);
+  const [showPhotoGallery, setShowPhotoGallery] = useState(false);
+  const [musicTriggered, setMusicTriggered] = useState(false);
 
   const invitationData = {
     name: "Dan Jhosss",
@@ -29,38 +29,38 @@ export default function Home() {
      en esos momentos que no se planean.Jhosss
       hay algo en ti que hace que compartir tiempo se sienta natural y especial.
 
-Desde que apareciste, ${' Jhosss'}, todo tiene un brillo distinto.`,
-    
+Desde que apareciste, ${" Jhosss"}, todo tiene un brillo distinto.`,
+
     invitation: `Mi Amor,
 ¿Te gustaría compartir conmigo un 14 de febrero especial?
  Me haría mucha ilusión.`,
-    
+
     location: "Urípa, Chincheros, Apurímac, Perú",
-    date: "2026-02-14T19:00:00"
-  }
+    date: "2026-02-14T19:00:00",
+  };
 
   const handleEnvelopeOpen = () => {
-    setIsEnvelopeOpen(true)
-    setMusicTriggered(true)
-    setTimeout(() => setShowAcceptButton(true), 4000)
-  }
+    setIsEnvelopeOpen(true);
+    setMusicTriggered(true);
+    setTimeout(() => setShowAcceptButton(true), 4000);
+  };
 
   const handleAccept = () => {
-    setAccepted(true)
-    setShowConfetti(true)
-    setShowFlowers(true)
+    setAccepted(true);
+    setShowConfetti(true);
+    setShowFlowers(true);
     // Mostrar galería después de 7 segundos (confeti + flores)
-    setTimeout(() => setShowPhotoGallery(true), 7000)
-  }
+    setTimeout(() => setShowPhotoGallery(true), 7000);
+  };
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-pink-100 via-purple-50 to-amber-50 overflow-hidden relative">
+    <div className="bg-linear-to-br from-pink-100 via-purple-50 to-amber-50 overflow-hidden relative mt-10">
       {/* Floating background hearts */}
       <FloatingHearts />
-      
+
       {/* Music Player */}
       <MusicPlayer trigger={musicTriggered} />
-      
+
       {/* Main Content */}
       <div className="relative z-10 flex flex-col items-center justify-center min-h-screen p-8">
         <AnimatePresence mode="wait">
@@ -84,7 +84,7 @@ Desde que apareciste, ${' Jhosss'}, todo tiene un brillo distinto.`,
             >
               {/* Romantic Message with Typewriter Effect */}
               <div className="bg-white/80 backdrop-blur-sm rounded-2xl p-8 shadow-xl">
-                <TypewriterText 
+                <TypewriterText
                   text={invitationData.message}
                   className="text-lg md:text-xl text-gray-800 leading-relaxed font-light italic"
                 />
@@ -101,7 +101,7 @@ Desde que apareciste, ${' Jhosss'}, todo tiene un brillo distinto.`,
                   <p className="text-xl text-gray-700 mb-4">
                     {invitationData.invitation}
                   </p>
-                  
+
                   {/* Accept Buttons */}
                   <AcceptButton onAccept={handleAccept} />
                 </motion.div>
@@ -124,10 +124,10 @@ Desde que apareciste, ${' Jhosss'}, todo tiene un brillo distinto.`,
           <PhotoGallery
             isVisible={showPhotoGallery}
             onBack={() => {
-              setShowPhotoGallery(false)
-              setShowFlowers(false)
-              setShowConfetti(false)
-              setAccepted(false)
+              setShowPhotoGallery(false);
+              setShowFlowers(false);
+              setShowConfetti(false);
+              setAccepted(false);
             }}
           />
         )}
@@ -145,5 +145,5 @@ Desde que apareciste, ${' Jhosss'}, todo tiene un brillo distinto.`,
         )}
       </div>
     </div>
-  )
+  );
 }

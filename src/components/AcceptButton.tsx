@@ -1,20 +1,20 @@
-'use client'
+"use client";
 
-import { useState } from 'react'
-import { motion } from 'framer-motion'
-import { Heart, X } from 'lucide-react'
+import { useState } from "react";
+import { motion } from "framer-motion";
+import { Heart, X } from "lucide-react";
 
 interface AcceptButtonProps {
-  onAccept: () => void
+  onAccept: () => void;
 }
 
 export default function AcceptButton({ onAccept }: AcceptButtonProps) {
-  const [showRejectModal, setShowRejectModal] = useState(false)
+  const [showRejectModal, setShowRejectModal] = useState(false);
 
   const handleReject = () => {
-    setShowRejectModal(true)
-    setTimeout(() => setShowRejectModal(false), 3000)
-  }
+    setShowRejectModal(true);
+    setTimeout(() => setShowRejectModal(false), 3000);
+  };
 
   return (
     <div className="relative">
@@ -22,12 +22,12 @@ export default function AcceptButton({ onAccept }: AcceptButtonProps) {
         {/* Accept Button */}
         <motion.button
           onClick={onAccept}
-          className="relative px-8 py-4 bg-gradient-to-r from-pink-500 to-purple-500 text-white font-semibold rounded-full shadow-lg overflow-hidden group"
+          className="relative px-8 py-4 bg-linear-to-r from-pink-500 to-purple-500 text-white font-semibold rounded-full shadow-lg overflow-hidden group"
           whileHover={{ scale: 1.05 }}
           whileTap={{ scale: 0.95 }}
         >
           <motion.div
-            className="absolute inset-0 bg-gradient-to-r from-pink-600 to-purple-600"
+            className="absolute inset-0 bg-linear-to-r from-pink-600 to-purple-600"
             initial={{ x: "-100%" }}
             whileHover={{ x: "0%" }}
             transition={{ duration: 0.3 }}
@@ -69,5 +69,5 @@ export default function AcceptButton({ onAccept }: AcceptButtonProps) {
         </motion.div>
       )}
     </div>
-  )
+  );
 }
