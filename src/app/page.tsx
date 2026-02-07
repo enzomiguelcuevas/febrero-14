@@ -23,9 +23,9 @@ export default function Home() {
 
   const invitationData = {
     name: "Dan Jhosss",
-    message: `Sin darme cuenta, empezaste a ocupar un lugar bonito en mis pensamientos. En lo simple, en lo cotidiano, en esos momentos que no se planean.\n\nJhosss, hay algo en ti que hace que compartir tiempo se sienta natural y especial. Desde que apareciste, todo tiene un brillo distinto.`,
-    invitation: `Mi Amor, ¿te gustaría compartir conmigo un 14 de febrero especial? Me haría mucha ilusión.`,
-    location: "Urípa, Chincheros, Apurímac, Perú",
+    message: `Sin darme cuenta, empezaste a ocupar un lugar bonito en mis pensamientos. En lo simple, en lo cotidiano, en esos momentos que no se planean.\n\nJhosss, hay algo en ti que hace que compartir tiempo se sienta natural y especial.`,
+    invitation: `Mi Amor, ¿te gustaría compartir conmigo un 14 de febrero especial?`,
+    location: "Chincheros, Apurímac, Perú",
     date: "2026-02-14T19:00:00",
   };
 
