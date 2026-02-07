@@ -133,7 +133,7 @@ export default function PhotoGallery({ isVisible, onBack }: PhotoGalleryProps) {
                       </div>
                     </DialogTrigger>
                     <DialogContent
-                      className="max-w-[100vw] h-full p-0 overflow-hidden bg-black/95 border-none flex flex-col items-center justify-center z-[300]"
+                      className="max-w-[100vw] h-full p-0 overflow-hidden bg-black/95 border-none flex flex-col items-center justify-center z-300"
                       showCloseButton={false}
                     >
                       <DialogHeader className="sr-only">
@@ -144,14 +144,14 @@ export default function PhotoGallery({ isVisible, onBack }: PhotoGalleryProps) {
                       </DialogHeader>
 
                       <div className="relative w-full h-full flex items-center justify-center bg-black/40 backdrop-blur-lg">
-                        <div className="absolute top-4 right-4 z-[310]">
+                        <div className="absolute top-6 right-6 z-310">
                           <DialogClose asChild>
                             <Button
-                              variant="ghost"
+                              variant="default"
                               size="icon"
-                              className="text-white hover:bg-white/20 rounded-full h-12 w-12"
+                              className="bg-valentine-dark hover:bg-valentine-red text-white rounded-full h-14 w-14 shadow-[0_10px_30px_rgba(89,13,34,0.6)] border border-white/20 transition-all duration-300 hover:scale-110 active:scale-95 group"
                             >
-                              <X className="w-8 h-8" />
+                              <X className="w-8 h-8 group-hover:rotate-90 transition-transform duration-300" />
                             </Button>
                           </DialogClose>
                         </div>
