@@ -12,11 +12,16 @@ Guidance for coding agents working in `febrero-14`.
 
 ## Setup And Core Commands
 - Install deps: `npm ci`
-- Dev server: `npm run dev`
-- Production build: `npm run build`
-- Start prod server: `npm run start`
-- Lint full repo: `npm run lint`
-- Type-check only (no emit): `npx tsc --noEmit`
+- Dev server (reference only): `npm run dev`
+- Production build (reference only): `npm run build`
+- Start prod server (reference only): `npm run start`
+- Lint full repo (reference only): `npm run lint`
+- Type-check only (no emit, reference only): `npx tsc --noEmit`
+
+## Owner Execution Policy (Important)
+- Do **not** run development or production servers (`npm run dev`, `npm run start`) unless the user explicitly asks.
+- Do **not** run tests, type-check, lint, or build by default; the repository owner performs verification.
+- When finishing a change, provide a short list of recommended commands the owner can run manually.
 
 ## Lint/Test Commands (Including Single-Test Guidance)
 - Lint one file: `npx eslint src/components/MusicPlayer.tsx`
@@ -98,6 +103,15 @@ Guidance for coding agents working in `febrero-14`.
 - Respect layering/z-index patterns already present in animated and modal views.
 - Avoid introducing conflicting color systems when existing tokens already fit.
 
+## Color Palette Guidelines
+- Primary romantic palette (from `src/app/globals.css`):
+- `--color-valentine-pink`: `#ff85a2`
+- `--color-valentine-red`: `#ff4d6d`
+- `--color-valentine-cream`: `#fff0f3`
+- `--color-valentine-dark`: `#590d22`
+- UI semantic tokens also exist in `:root` (`--background`, `--foreground`, `--primary`, `--ring`, etc.); prefer existing variables over hardcoded colors.
+- For new styles, favor `bg-valentine-*`, `text-valentine-*`, and `border-valentine-*` classes.
+
 ## Error Handling And Resilience
 - Fail safely in UI interactions (`if (!ref.current) return`).
 - Guard browser-only APIs behind client components/effects.
@@ -117,16 +131,16 @@ Guidance for coding agents working in `febrero-14`.
 - Make focused changes; avoid touching unrelated files.
 - Before editing, inspect nearby code for existing patterns and follow them.
 - Prefer small, reviewable diffs.
-- Run lint/build/type-check when changes could affect behavior.
+- Do not execute lint/build/type-check/test/server commands unless the user explicitly requests command execution.
 - If a command cannot be run, state it clearly and explain why.
 - Never commit generated artifacts unless the repo convention requires it.
 
 ## Verification Checklist For Typical Changes
-- Run: `npm run lint`
-- Run: `npx tsc --noEmit`
-- Run: `npm run build` for route or config-level changes
-- Manually verify key pages in dev server for UI-heavy edits
-- Confirm no console/runtime errors in affected flows
+- Suggest owner-run command: `npm run lint`
+- Suggest owner-run command: `npx tsc --noEmit`
+- Suggest owner-run command: `npm run build` for route or config-level changes
+- Ask owner to manually verify key pages in browser
+- Ask owner to confirm no console/runtime errors in affected flows
 
 ## Rules Files (Cursor/Copilot)
 - Checked `.cursor/rules/`: not present.
